@@ -40,6 +40,10 @@ local function setDownloadFinish()
     os.execute("sh setCachedFinish.sh " .. taskid)
 end
 
+local function genVideoJson()
+    os.execute("lua genVideoJson.lua")
+end
+
 local function getFileLines(path)
     cmd = "wc -l " .. path .. " | awk '{print $1}'"
     local f = io.popen(cmd)
@@ -82,6 +86,7 @@ local function main()
         end
 
         setDownloadFinish()
+        genVideoJson()
     end
 end
 

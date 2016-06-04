@@ -1,11 +1,8 @@
 local socket = require("socket")
 local cjson = require("cjson")
 local tcpClient = nil
---local host = "10.117.3.22"
---local host = "192.168.199.126"
-local host = "192.168.199.1"
---local port = 11111
-local port = 22222
+local host = "10.117.3.22"
+local port = 11111
 
 local function getMac()
 	os.execute("sh mac.sh")
@@ -29,7 +26,7 @@ end
 
 local function saveTask(msg, id)
     file = io.open("tasklist", "a")
-    file:write(id .. ":" .. msg["title"] .. ":" .. msg["url"] .. ":downloading")
+    file:write(id .. ">" .. msg["title"] .. ">" .. msg["url"] .. ">0")
     file:write("\n")
     file:close()
 end
