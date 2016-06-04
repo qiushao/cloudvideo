@@ -34,10 +34,12 @@ local function genVideoJson()
     do
         if endwith(line, ">1") then
             info = split(line, ">")
+            local url = "http://192.168.199.1/cloudvideo/" .. info[1] .. "/out.ts"
             json = json .. '{"title":"' .. info[2] .. '", ' 
-            json = json .. '"url":"' .. info[3] .. '"},'
+            json = json .. '"url":"' .. url .. '"},'
         end
     end
+    json = string.sub(json, 1, -2)
     json = json .. ']}'
     print(json)
     local file = io.open("/tmp/storage/mmcblk0p2/cloudvideo/videos.json", "w")
