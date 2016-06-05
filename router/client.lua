@@ -1,5 +1,6 @@
 local socket = require("socket")
 local cjson = require("cjson")
+local xstr = require("xstr")
 local tcpClient = nil
 local host = "10.117.3.22"
 local port = 11111
@@ -41,6 +42,26 @@ end
 
 local function cacheStateRequest(msg)
     print("cacheStateRequest")
+    local res = {}
+    res.type = "cache_state_response"
+    res.phoneid = msg['phoneid']
+    res.data = {}
+
+    for line in io.lines("tasklist")
+    do
+        info = xstr.split(line, ">")
+        local video = {}
+        video.title = info[2]
+        video.url = info[3]
+        video.progress = 50
+        video.state = "dowloading"
+        video.reason = "foobar"
+        table.insert(res.data, video)
+    end
+
+    json = cjson.encode(res)
+    print("send: " .. json)
+	tcpClient:send(json .. '\n')
 end
 
 local function main()
@@ -69,6 +90,7 @@ local function main()
 
 		elseif msg["type"] == "cache_state_request" then
             cacheStateRequest(msg)
+            print("phoneid = " .. msg['phoneid'])
 		end
 	end
 end

@@ -28,26 +28,24 @@ local function main()
 
     --parse m3u8 get first level urls
     local firstlevel = {}
-    local candown = false
+    local dir, _ = xstr.splitPath(m3u8url, '/')
+    print("pre path = " .. dir)
     for line in io.lines(taskdir .. "/m3u8")
     do
         if not xstr.startwith(line, "#") then
-            if xstr.startwith(line, "http") then 
-                candown = true
+            if not xstr.startwith(line, "http") then 
+                line = dir .. line
             end
             table.insert(firstlevel, line)
         end
     end
 
-    if candown then
-        local file = io.open(taskdir .. "/download.links", "w")
-        for key,value in ipairs(firstlevel) do
-            file:write(value)
-            file:write("\n")
-        end
-        file:close()
+    local file = io.open(taskdir .. "/download.links", "w")
+    for key,value in ipairs(firstlevel) do
+        file:write(value)
+        file:write("\n")
     end
-
+    file:close()
 end
 
 main()

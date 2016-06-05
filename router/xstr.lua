@@ -38,4 +38,12 @@ function xstr.split(s, delim)
     return t
 end
 
+function xstr.splitPath(path, delim)
+    local rev = string.reverse(path)
+    local index = string.find(rev, delim)
+    local dir = string.sub(path, 1, -index)
+    local file = string.sub(path, -(index-1), -1)
+    return dir, file
+end
+
 return xstr
