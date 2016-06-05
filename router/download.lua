@@ -69,12 +69,13 @@ local function main()
         do
             cmd = 'cat ' .. taskdir .. '/out' .. index .. '.ts >> ' .. taskdir .. '/out.ts'
             execmd(cmd)
+            cmd = 'rm  -rf ' .. taskdir .. '/out' .. index .. '.ts'
+            execmd(cmd)
             index = index + 1
         end
-
-        setDownloadFinish()
-        genVideoJson()
     end
+    setDownloadFinish()
+    genVideoJson()
 end
 
 main()
