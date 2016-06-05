@@ -1,5 +1,6 @@
 local http = require("socket.http")
 local ltn12 = require("ltn12")
+local xstr = require("xstr")
 
 local m3u8url = arg[1]
 local taskdir = arg[2]
@@ -10,27 +11,6 @@ local function httpget(u)
 		url=u,
 		sink=ltn12.sink.table(t)}
 	return r,c,h,table.concat(t)
-end
-
-local function startwith(str, substr)
-    if string.find(str, substr) ~= 1 then
-        return false
-    else
-        return true
-    end
-end
-
-local function endwith(str, substr)
-    if str == nil or substr == nil then
-        return nil, "the string or the sub-string parameter is nil"
-    end
-    str_tmp = string.reverse(str)
-    substr_tmp = string.reverse(substr)
-    if string.find(str_tmp, substr_tmp) ~= 1 then
-        return false
-    else
-        return true
-    end
 end
 
 local function main()
@@ -51,8 +31,8 @@ local function main()
     local candown = false
     for line in io.lines(taskdir .. "/m3u8")
     do
-        if not startwith(line, "#") then
-            if startwith(line, "http") then 
+        if not xstr.startwith(line, "#") then
+            if xstr.startwith(line, "http") then 
                 candown = true
             end
             table.insert(firstlevel, line)

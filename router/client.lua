@@ -8,7 +8,7 @@ local function getMac()
 	os.execute("sh mac.sh")
 	local fd = io.open("mac.txt", "r")
 	local mac = fd:read()
-	--return mac
+    --return mac
     return "D4:EE:07:12:7E:06"
 end
 
@@ -34,7 +34,7 @@ end
 local function cacheRequest(msg)
     local id = getNextTaskID()
     saveTask(msg, id)
-    local cmd = 'lua download.lua "' .. msg['url'] .. '" ' .. id
+    local cmd = 'lua download.lua "' .. msg['url'] .. '" ' .. id .. ' &'
     print("cmd = " .. cmd)
     os.execute(cmd)
 end
@@ -44,17 +44,22 @@ local function cacheStateRequest(msg)
 end
 
 local function main()
-	local mac = getMac()
-	print("mac addr = " .. mac)
+    print("cloud video client running...")
 	tcpClient  = socket.tcp()
 	local ret = tcpClient:connect(host, port)
+    print("connect server success...")
 
-	tcpClient:send('{"type":"login_request", "mac":"' .. mac .. '"}\n')
+    local msg = {}
+    msg.type = "login_request"
+    msg.mac = getMac()
+    local json = cjson.encode(msg)
+	tcpClient:send(json .. '\n')
+    print("send msg to server: " .. json)
 
 	while true do
 		print("\n")
 		local response, status = tcpClient:receive()
-		print("rece = " .. response)
+		print("rece msg from server: " .. response)
 		local msg = cjson.decode(response)
 		if msg["type"] == "login_response" then
 			print("login_response success = " .. msg["success"])

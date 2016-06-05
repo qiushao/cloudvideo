@@ -1,20 +1,7 @@
+local xstr = require("xstr")
 local m3u8url = arg[1]
 local taskid = arg[2]
 local taskdir = "/tmp/storage/mmcblk0p2/cloudvideo/" .. taskid
-
-local function endwith(str, substr)
-    str_tmp = string.reverse(str)
-    substr_tmp = string.reverse(substr)
-    if string.find(str_tmp, substr_tmp) ~= 1 then
-        return false
-    else
-        return true
-    end
-end
-
-local function trim(s) 
-    return (string.gsub(s, "^%s*(.-)%s*$", "%1")) 
-end 
 
 local function execmd(cmd)
     print("execute cmd: " .. cmd)
@@ -58,7 +45,7 @@ local function main()
     execmd(cmd)
 
     --if is already mp4 os ts file, just download it, no need to parser
-    if endwith(m3u8url, ".ts") then
+    if xstr.endwith(m3u8url, ".ts") then
         down(m3u8url, taskdir .. "/out.ts")
         saveProgress(1,1)
     else
@@ -67,7 +54,7 @@ local function main()
         index = 0
         count = getFileLines(taskdir .. "/download.links")
         for line in io.lines(taskdir .. "/download.links") do
-            line = trim(line)
+            line = xstr.trim(line)
             out = taskdir .. "/out" .. index .. ".ts"
             print("down load " .. line .. " into " .. out)
             down(line, out)
