@@ -1,0 +1,32 @@
+[
+    {
+        "name": "libluajavatest.so",
+        "md5": "b1ab736953d6af360eb8f2c0471ae6d8",
+        "url": ""
+    },
+    {
+        "name": "libalgmstest.so",
+        "md5": "093948535a203c4843d338e5fb9035a2",
+        "url": ""
+    },
+    {
+        "name": "res_rockitv.zip",
+        "md5": "88045624134dd9decc69ec79b111f4a7",
+        "url": ""
+    },
+    {
+        "name": "googlezxing.jar",
+        "md5": "74b7b1cd334424974f57cc254df169f6",
+        "url": ""
+    },
+    {
+        "name": "libadothls.so",
+        "md5": "ffd3c4ae64d90063736e06c67c5b54d1",
+        "url": ""
+    },
+    {
+        "name": "core.jar",
+        "md5": "39c238b7bd24c3eb003da3b7fcd15088",
+        "url": ""
+    }
+]

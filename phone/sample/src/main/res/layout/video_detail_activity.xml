@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp" >
+
+
+    <Button 
+        android:id="@+id/detail_play_button"
+        android:text="PLAY"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="26sp"
+        android:nextFocusUp="@id/detail_play_button"
+        android:layout_marginRight="30dp"
+        />
+
+</RelativeLayout>
